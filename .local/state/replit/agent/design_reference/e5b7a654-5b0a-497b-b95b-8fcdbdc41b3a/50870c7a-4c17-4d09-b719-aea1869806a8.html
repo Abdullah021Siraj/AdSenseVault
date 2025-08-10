@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartFinance Pro - Free Financial Planning Tools & Calculators | Compare Loans, Investments & Insurance</title>
+    <meta name="description" content="Free financial planning tools and calculators. Compare loans, mortgages, investments and insurance rates. Save thousands with our expert financial guidance and comparison tools for 2025.">
+    <meta name="keywords" content="financial calculator, loan calculator, mortgage calculator, investment calculator, insurance comparison, financial planning, personal finance, money saving, investment advice, retirement planning">
+    <meta name="author" content="SmartFinance Pro">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://smartfinance-pro.vercel.app">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="SmartFinance Pro - Free Financial Planning Tools">
+    <meta property="og:description" content="Free financial calculators and comparison tools. Save thousands on loans, investments, and insurance.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://smartfinance-pro.vercel.app">
+    
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "SmartFinance Pro",
+        "description": "Free financial planning tools and calculators for loans, investments, and insurance",
+        "url": "https://smartfinance-pro.vercel.app"
+    }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    'inter': ['Inter', 'sans-serif'],
+                },
+                colors: {
+                    'finance-blue': '#1E40AF',
+                    'finance-green': '#059669',
+                    'trust-gray': '#64748B'
+                }
+            }
+        }
+    };
+    </script>
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/heroicons/2.0.18/heroicons.min.css">
+    
+    <style>
+        /* Custom CSS for better performance */
+        .calculator-card { transition: transform 0.1s ease; }
+        .calculator-card:hover { transform: translateY(-1px); }
+        .adsense-zone { min-height: 90px; background: #f8fafc; border: 1px dashed #cbd5e1; }
+        .bookmark-btn { transition: all 0.2s ease; }
+        .loading-skeleton { background: linear-gradient(90deg, #f0f0f0 25%, transparent 37%, transparent 63%, #f0f0f0 75%); }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 text-gray-900">
+    
+    <!-- AdSense Top Banner -->
+    <div class="adsense-zone w-full text-center py-4 bg-gray-100">
+        <!-- AdSense Banner 728x90 - Replace with actual AdSense code -->
+        <div class="text-sm text-gray-500">AdSense Banner - Premium Financial Ads</div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="text-2xl font-bold text-finance-blue">💰 SmartFinance Pro</div>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#calculators" class="text-gray-700 hover:text-finance-blue font-medium">Calculators</a>
+                    <a href="#compare" class="text-gray-700 hover:text-finance-blue font-medium">Compare</a>
+                    <a href="#guides" class="text-gray-700 hover:text-finance-blue font-medium">Guides</a>
+                    <button id="bookmarkBtn" class="bookmark-btn bg-finance-green text-white px-4 py-2 rounded-lg hover:bg-green-700 font-medium">
+                        📌 Bookmark Site
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Main Calculator -->
+    <section class="bg-gradient-to-r from-finance-blue to-blue-700 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+                        Smart Financial Planning Made Simple
+                    </h1>
+                    <p class="text-xl mb-8 text-blue-100">
+                        Free calculators and comparison tools to save you thousands on loans, investments, and insurance. Trusted by over 500,000+ users.
+                    </p>
+                    <div class="flex items-center space-x-4 text-sm">
+                        <span class="bg-green-500 px-3 py-1 rounded-full">✓ 100% Free</span>
+                        <span class="bg-blue-600 px-3 py-1 rounded-full">✓ No Registration</span>
+                        <span class="bg-purple-600 px-3 py-1 rounded-full">✓ Instant Results</span>
+                    </div>
+                </div>
+                
+                <!-- Featured Loan Calculator -->
+                <div class="bg-white rounded-xl shadow-2xl p-6 text-gray-900">
+                    <h3 class="text-2xl font-bold mb-6 text-center">Loan Payment Calculator</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Loan Amount ($)</label>
+                            <input type="number" id="loanAmount" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-finance-blue" placeholder="25000" value="25000">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Interest Rate (%)</label>
+                                <input type="number" id="interestRate" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-finance-blue" placeholder="5.5" value="5.5" step="0.1">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Term (Years)</label>
+                                <input type="number" id="loanTerm" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-finance-blue" placeholder="5" value="5">
+                            </div>
+                        </div>
+                        <button onclick="calculateLoan()" class="w-full bg-finance-green text-white py-4 rounded-lg hover:bg-green-700 font-semibold text-lg">
+                            Calculate Payment
+                        </button>
+                        <div id="loanResult" class="hidden bg-gray-50 p-4 rounded-lg border-l-4 border-finance-green">
+                            <div class="text-lg font-semibold">Monthly Payment: <span id="monthlyPayment" class="text-finance-green"></span></div>
+                            <div class="text-sm text-gray-600 mt-2">
+                                <div>Total Interest: <span id="totalInterest"></span></div>
+                                <div>Total Payment: <span id="totalPayment"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Indicators -->
+    <section class="bg-white py-8 border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center items-center space-x-8 space-y-4">
+                <div class="flex items-center space-x-2 text-gray-600">
+                    <span class="text-green-500">🛡️</span>
+                    <span class="font-medium">Bank-Level Security</span>
+                </div>
+                <div class="flex items-center space-x-2 text-gray-600">
+                    <span class="text-blue-500">⭐</span>
+                    <span class="font-medium">4.9/5 User Rating</span>
+                </div>
+                <div class="flex items-center space-x-2 text-gray-600">
+                    <span class="text-purple-500">📊</span>
+                    <span class="font-medium">500K+ Calculations</span>
+                </div>
+                <div class="flex items-center space-x-2 text-gray-600">
+                    <span class="text-red-500">🏆</span>
+                    <span class="font-medium">Featured in Forbes</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AdSense In-Article Ad -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="adsense-zone text-center py-8">
+            <!-- AdSense Rectangle 336x280 - Replace with actual AdSense code -->
+            <div class="text-sm text-gray-500">AdSense In-Article - Financial Products</div>
+        </div>
+    </div>
+
+    <!-- Calculator Grid -->
+    <section id="calculators" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold mb-4">Financial Calculators</h2>
+                <p class="text-xl text-gray-600">Choose from our comprehensive suite of financial planning tools</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Mortgage Calculator -->
+                <div class="calculator-card bg-white rounded-xl shadow-lg p-6 hover:shadow-xl">
+                    <div class="text-4xl mb-4">🏠</div>
+                    <h3 class="text-xl font-semibold mb-3">Mortgage Calculator</h3>
+                    <p class="text-gray-600 mb-4">Calculate monthly payments, total interest, and compare mortgage options.</p>
+                    <button class="w-full bg-finance-blue text-white py-3 rounded-lg hover:bg-blue-700 font-medium">
+                        Calculate Mortgage
+                    </button>
+                </div>
+
+                <!-- Investment Calculator -->
+                <div class="calculator-card bg-white rounded-xl shadow-lg p-6 hover:shadow-xl">
+                    <div class="text-4xl mb-4">📈</div>
+                    <h3 class="text-xl font-semibold mb-3">Investment Growth</h3>
+                    <p class="text-gray-600 mb-4">Project investment returns with compound interest calculations.</p>
+                    <button class="w-full bg-finance-green text-white py-3 rounded-lg hover:bg-green-700 font-medium">
+                        Calculate Returns
+                    </button>
+                </div>
+
+                <!-- Retirement Calculator -->
+                <div class="calculator-card bg-white rounded-xl shadow-lg p-6 hover:shadow-xl">
+                    <div class="text-4xl mb-4">🎯</div>
+                    <h3 class="text-xl font-semibold mb-3">Retirement Planner</h3>
+                    <p class="text-gray-600 mb-4">Plan your retirement savings and calculate required contributions.</p>
+                    <button class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 font-medium">
+                        Plan Retirement
+                    </button>
+                </div>
+
+                <!-- Credit Card Payoff -->
+                <div class="calculator-card bg-white rounded-xl shadow-lg p-6 hover:shadow-xl">
+                    <div class="text-4xl mb-4">💳</div>
+                    <h3 class="text-xl font-semibold mb-3">Credit Card Payoff</h3>
+                    <p class="text-gray-600 mb-4">Calculate payoff time and interest savings strategies.</p>
+                    <button class="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 font-medium">
+                        Calculate Payoff
+                    </button>
+                </div>
+
+                <!-- Auto Loan Calculator -->
+                <div class="calculator-card bg-white rounded-xl shadow-lg p-6 hover:shadow-xl">
+                    <div class="text-4xl mb-4">🚗</div>
+                    <h3 class="text-xl font-semibold mb-3">Auto Loan Calculator</h3>
+                    <p class="text-gray-600 mb-4">Compare car loan options and calculate monthly payments.</p>
+                    <button class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 font-medium">
+                        Calculate Payment
+                    </button>
+                </div>
+
+                <!-- Savings Calculator -->
+                <div class="calculator-card bg-white rounded-xl shadow-lg p-6 hover:shadow-xl">
+                    <div class="text-4xl mb-4">🏦</div>
+                    <h3 class="text-xl font-semibold mb-3">Savings Growth</h3>
+                    <p class="text-gray-600 mb-4">Track savings growth with regular deposits and interest.</p>
+                    <button class="w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 font-medium">
+                        Calculate Growth
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="lg:grid lg:grid-cols-4 lg:gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-3">
+                
+                <!-- Comparison Tools Section -->
+                <section id="compare" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-8">Compare Financial Products</h2>
+                    
+                    <!-- Loan Comparison Table -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+                        <div class="bg-gradient-to-r from-finance-blue to-blue-600 text-white p-6">
+                            <h3 class="text-2xl font-semibold">Best Personal Loan Rates 2025</h3>
+                            <p class="text-blue-100 mt-2">Compare top-rated lenders with competitive rates</p>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lender</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">APR Range</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Loan Amount</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Terms</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200" data-mock="true">
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="font-medium text-gray-900">SoFi</div>
+                                            <div class="text-sm text-gray-500">No fees</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-finance-green font-semibold">5.99% - 21.28%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-900">$5,000 - $100,000</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-900">2-7 years</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                                                <span class="ml-2 text-sm text-gray-600">4.8/5</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="font-medium text-gray-900">LightStream</div>
+                                            <div class="text-sm text-gray-500">AutoPay discount</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-finance-green font-semibold">7.49% - 25.49%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-900">$5,000 - $100,000</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-900">2-7 years</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <span class="text-yellow-400">⭐⭐⭐⭐</span>
+                                                <span class="ml-2 text-sm text-gray-600">4.5/5</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="font-medium text-gray-900">Discover</div>
+                                            <div class="text-sm text-gray-500">30-day guarantee</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-finance-green font-semibold">6.99% - 24.99%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-900">$2,500 - $35,000</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-900">3-7 years</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <span class="text-yellow-400">⭐⭐⭐⭐</span>
+                                                <span class="ml-2 text-sm text-gray-600">4.3/5</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="bg-gray-50 px-6 py-4">
+                            <p class="text-sm text-gray-600">*Rates shown are for qualified borrowers. Actual rates may vary based on creditworthiness.</p>
+                        </div>
+                    </div>
+
+                    <!-- AdSense Rectangle -->
+                    <div class="adsense-zone text-center py-6 mb-8">
+                        <div class="text-sm text-gray-500">AdSense Rectangle 300x250 - Loan Offers</div>
+                    </div>
+                </section>
+
+                <!-- Financial Guides Section -->
+                <section id="guides" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-8">Expert Financial Guides</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Guide 1 -->
+                        <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                            <!-- Professional business meeting discussing financial planning -->
+                            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400" alt="Professional financial planning meeting" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <div class="flex items-center space-x-2 text-sm text-gray-500 mb-2">
+                                    <span>📊</span>
+                                    <span>Investment Guide</span>
+                                    <span>•</span>
+                                    <span>5 min read</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-3">How to Build a $1M Investment Portfolio by Age 50</h3>
+                                <p class="text-gray-600 mb-4">Learn proven strategies for long-term wealth building through smart investment choices and compound growth.</p>
+                                <a href="#" class="text-finance-blue hover:text-blue-700 font-medium">Read Guide →</a>
+                            </div>
+                        </article>
+
+                        <!-- Guide 2 -->
+                        <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                            <!-- Calculator and financial documents on desk -->
+                            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400" alt="Financial calculator and planning documents" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <div class="flex items-center space-x-2 text-sm text-gray-500 mb-2">
+                                    <span>🏠</span>
+                                    <span>Mortgage Guide</span>
+                                    <span>•</span>
+                                    <span>7 min read</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-3">Mortgage Rate Comparison: Save $50K+ Over 30 Years</h3>
+                                <p class="text-gray-600 mb-4">Compare mortgage options and discover how a small rate difference can save tens of thousands in interest.</p>
+                                <a href="#" class="text-finance-blue hover:text-blue-700 font-medium">Read Guide →</a>
+                            </div>
+                        </article>
+
+                        <!-- Guide 3 -->
+                        <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                            <!-- Money and calculator showing savings -->
+                            <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400" alt="Money and calculator representing savings planning" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <div class="flex items-center space-x-2 text-sm text-gray-500 mb-2">
+                                    <span>💳</span>
+                                    <span>Debt Management</span>
+                                    <span>•</span>
+                                    <span>6 min read</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-3">Pay Off Credit Card Debt 3X Faster: Proven Methods</h3>
+                                <p class="text-gray-600 mb-4">Strategic debt payoff methods including avalanche and snowball techniques to eliminate debt quickly.</p>
+                                <a href="#" class="text-finance-blue hover:text-blue-700 font-medium">Read Guide →</a>
+                            </div>
+                        </article>
+
+                        <!-- Guide 4 -->
+                        <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                            <!-- Retirement planning concept with beach sunset -->
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400" alt="Peaceful beach sunset representing retirement planning" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <div class="flex items-center space-x-2 text-sm text-gray-500 mb-2">
+                                    <span>🎯</span>
+                                    <span>Retirement</span>
+                                    <span>•</span>
+                                    <span>8 min read</span>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-3">Retirement Planning: How Much You Really Need by Age</h3>
+                                <p class="text-gray-600 mb-4">Age-based retirement savings benchmarks and strategies to ensure a comfortable retirement lifestyle.</p>
+                                <a href="#" class="text-finance-blue hover:text-blue-700 font-medium">Read Guide →</a>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <!-- AdSense Sidebar -->
+                <div class="sticky top-8 space-y-6">
+                    <!-- Sidebar Ad 1 -->
+                    <div class="adsense-zone text-center py-12">
+                        <div class="text-sm text-gray-500">AdSense Sidebar 300x600 - Financial Services</div>
+                    </div>
+
+                    <!-- Quick Tools -->
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Quick Tools</h3>
+                        <div class="space-y-3">
+                            <button class="w-full text-left px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                📊 Budget Calculator
+                            </button>
+                            <button class="w-full text-left px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                💰 Salary Calculator
+                            </button>
+                            <button class="w-full text-left px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                📈 ROI Calculator
+                            </button>
+                            <button class="w-full text-left px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                🏦 CD Calculator
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Newsletter Signup -->
+                    <div class="bg-gradient-to-r from-finance-green to-green-600 text-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-lg font-semibold mb-3">💡 Financial Tips Weekly</h3>
+                        <p class="text-green-100 text-sm mb-4">Get expert money-saving tips and market insights delivered to your inbox.</p>
+                        <input type="email" placeholder="Enter your email" class="w-full px-3 py-2 rounded-lg text-gray-900 mb-3 text-sm">
+                        <button class="w-full bg-white text-finance-green py-2 rounded-lg hover:bg-gray-100 font-medium text-sm">
+                            Subscribe Free
+                        </button>
+                        <p class="text-xs text-green-200 mt-2">No spam. Unsubscribe anytime.</p>
+                    </div>
+
+                    <!-- Sidebar Ad 2 -->
+                    <div class="adsense-zone text-center py-8">
+                        <div class="text-sm text-gray-500">AdSense Sidebar 300x250</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="text-2xl font-bold mb-4">💰 SmartFinance Pro</div>
+                    <p class="text-gray-400 mb-6">Empowering smart financial decisions through free tools and expert guidance. Save money, build wealth, secure your future.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">📘 Facebook</a>
+                        <a href="#" class="text-gray-400 hover:text-white">🐦 Twitter</a>
+                        <a href="#" class="text-gray-400 hover:text-white">💼 LinkedIn</a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Calculators</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Loan Calculator</a></li>
+                        <li><a href="#" class="hover:text-white">Mortgage Calculator</a></li>
+                        <li><a href="#" class="hover:text-white">Investment Calculator</a></li>
+                        <li><a href="#" class="hover:text-white">Retirement Planner</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Financial Guides</a></li>
+                        <li><a href="#" class="hover:text-white">Rate Comparison</a></li>
+                        <li><a href="#" class="hover:text-white">Blog</a></li>
+                        <li><a href="#" class="hover:text-white">About Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 SmartFinance Pro. All rights reserved. | <a href="#" class="hover:text-white">Privacy Policy</a> | <a href="#" class="hover:text-white">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AdSense Footer Banner -->
+    <div class="adsense-zone w-full text-center py-4 bg-gray-100">
+        <div class="text-sm text-gray-500">AdSense Footer Banner 728x90</div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Loan Calculator Functionality
+        function calculateLoan() {
+            const amount = parseFloat(document.getElementById('loanAmount').value) || 0;
+            const rate = parseFloat(document.getElementById('interestRate').value) || 0;
+            const term = parseFloat(document.getElementById('loanTerm').value) || 0;
+
+            if (amount <= 0 || rate <= 0 || term <= 0) {
+                alert('Please enter valid positive numbers for all fields');
+                return;
+            }
+
+            const monthlyRate = (rate / 100) / 12;
+            const numPayments = term * 12;
+            
+            const monthlyPayment = (amount * monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / 
+                                  (Math.pow(1 + monthlyRate, numPayments) - 1);
+            
+            const totalPayment = monthlyPayment * numPayments;
+            const totalInterest = totalPayment - amount;
+
+            document.getElementById('monthlyPayment').textContent = '$' + monthlyPayment.toFixed(2);
+            document.getElementById('totalInterest').textContent = '$' + totalInterest.toFixed(2);
+            document.getElementById('totalPayment').textContent = '$' + totalPayment.toFixed(2);
+            document.getElementById('loanResult').classList.remove('hidden');
+
+            // Store calculation in localStorage
+            const calculation = {
+                date: new Date().toISOString(),
+                amount: amount,
+                rate: rate,
+                term: term,
+                monthlyPayment: monthlyPayment.toFixed(2)
+            };
+            
+            let savedCalculations = JSON.parse(localStorage.getItem('savedCalculations') || '[]');
+            savedCalculations.unshift(calculation);
+            savedCalculations = savedCalculations.slice(0, 10); // Keep only last 10
+            localStorage.setItem('savedCalculations', JSON.stringify(savedCalculations));
+        }
+
+        // Bookmark functionality
+        document.getElementById('bookmarkBtn').addEventListener('click', function() {
+            // Add to browser bookmarks (requires user interaction)
+            if (window.sidebar && window.sidebar.addPanel) { // Firefox
+                window.sidebar.addPanel('SmartFinance Pro', window.location.href, '');
+            } else if (window.external && ('AddFavorite' in window.external)) { // IE
+                window.external.AddFavorite(window.location.href, 'SmartFinance Pro');
+            } else { // Other browsers
+                alert('Please bookmark this page manually (Ctrl+D or Cmd+D)');
+            }
+            
+            // Store bookmark preference
+            localStorage.setItem('isBookmarked', 'true');
+            this.innerHTML = '✅ Bookmarked';
+            this.classList.add('bg-green-600');
+        });
+
+        // Check if already bookmarked
+        if (localStorage.getItem('isBookmarked') === 'true') {
+            const bookmarkBtn = document.getElementById('bookmarkBtn');
+            bookmarkBtn.innerHTML = '✅ Bookmarked';
+            bookmarkBtn.classList.add('bg-green-600');
+        }
+
+        // Cache user preferences
+        function cacheUserData() {
+            const userData = {
+                lastVisit: new Date().toISOString(),
+                visitCount: (parseInt(localStorage.getItem('visitCount') || '0') + 1),
+                preferredCalculators: ['loan', 'mortgage'], // Track usage
+                theme: 'default'
+            };
+            
+            localStorage.setItem('userData', JSON.stringify(userData));
+            localStorage.setItem('visitCount', userData.visitCount.toString());
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            cacheUserData();
+            
+            // Show returning user message
+            const visitCount = parseInt(localStorage.getItem('visitCount') || '1');
+            if (visitCount > 1) {
+                console.log(`Welcome back! This is your ${visitCount} visit.`);
+            }
+            
+            // Auto-calculate if values are present
+            const loanAmount = document.getElementById('loanAmount').value;
+            if (loanAmount && parseFloat(loanAmount) > 0) {
+                calculateLoan();
+            }
+        });
+
+        // Performance optimization - lazy load non-critical content
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Load additional content when visible
+                        entry.target.classList.add('loaded');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.calculator-card').forEach(card => {
+                observer.observe(card);
+            });
+        }
+
+        // TODO: Implement advanced calculator functionality
+        // TODO: Add API integration for real-time rates
+        // TODO: Implement user account system for saved calculations
+        // TODO: Add more detailed financial analysis features
+    </script>
+
+</body>
+</html>
