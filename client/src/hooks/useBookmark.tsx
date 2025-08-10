@@ -7,9 +7,9 @@ export function useBookmark() {
 
   const addBookmark = () => {
     // Attempt to add bookmark programmatically (limited browser support)
-    if (window.sidebar && window.sidebar.addPanel) {
+    if ((window as any).sidebar && (window as any).sidebar.addPanel) {
       // Firefox
-      window.sidebar.addPanel('SmartFinance Pro', window.location.href, '');
+      (window as any).sidebar.addPanel('SmartFinance Pro', window.location.href, '');
       setIsBookmarked(true);
       toast({
         title: "Bookmarked!",
